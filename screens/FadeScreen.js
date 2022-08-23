@@ -16,22 +16,16 @@ export default function EasingScreen() {
     fadeAnim.setValue(0);
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 50000,
+      duration: duration,
       easing,
       useNativeDriver: false,
     }).start();
   };
 
-  const opacityAnim = fadeAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, 80],
-  });
-
   const animatedStyles = [
     styles.box,
     {
-      fadeAnim,
-      opacity: opacityAnim,
+      opacity: fadeAnim,
       width: 100,
       height: 100,
     },
@@ -68,7 +62,7 @@ const SECTIONS = [
     data: [
       {title: 'Bounce', easing: Easing.bounce, duration: 1800},
       {title: 'Ease', easing: Easing.ease},
-      {title: 'Elastic', easing: Easing.elastic(8), duration: 5000},
+      {title: 'Elastic', easing: Easing.elastic(8), duration: 3000},
     ],
   },
   {
