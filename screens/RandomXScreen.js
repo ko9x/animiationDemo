@@ -2,6 +2,9 @@ import React from 'react';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
+  withSpring,
+  withTiming,
+  withDelay
 } from 'react-native-reanimated';
 import {StyleSheet, Button} from 'react-native';
 
@@ -10,7 +13,7 @@ export default function RandomXScreen() {
 
   const animatedStyles = useAnimatedStyle(() => {
     return {
-      transform: [{translateX: offset.value}],
+      transform: [{translateX: withSpring(offset.value)}],
     };
   });
 
@@ -18,8 +21,10 @@ export default function RandomXScreen() {
     <>
       <Animated.View style={[styles.box, animatedStyles]} />
       <Button
-        onPress={() => (offset.value = Math.random() * 255)}
-        title="Move"
+        onPress={() => {
+            offset.value = Math.random() * 255;
+        }}
+        title="Spring"
       />
     </>
   );
@@ -30,6 +35,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue',
     width: 100,
     height: 100,
-    borderRadius: 20
+    borderRadius: 20,
   },
 });

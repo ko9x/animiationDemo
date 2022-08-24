@@ -23,6 +23,10 @@ export function CircularProgress({
   const theta = useSharedValue(2 * Math.PI * 1.001);
   const animateTo = useDerivedValue(() => 2 * Math.PI * invertedCompletion);
 
+  const FADE_DELAY = 1500;
+
+  const textOpacity = useSharedValue(0);
+
   const animatedProps = useAnimatedProps(() => {
     return {
       strokeDashoffset: withTiming(theta.value * innerRadius, {

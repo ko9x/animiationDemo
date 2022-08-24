@@ -17,7 +17,7 @@ export default function App() {
     {name: 'fade', screen: <FadeScreen />, id: 1},
     {name: 'size', screen: <SizeScreen />, id: 2},
     {name: 'position', screen: <PositionScreen />, id: 3},
-    {name: 'progCircle', screen: <ProgressCircleScreen />, id: 4},
+    {name: 'progress', screen: <ProgressCircleScreen />, id: 4},
     {name: 'jump', screen: <RandomXScreen />, id: 5},
   ];
 
