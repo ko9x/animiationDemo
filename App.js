@@ -4,6 +4,7 @@ import SizeScreen from './screens/SizeScreen';
 import FadeScreen from './screens/FadeScreen';
 import PositionScreen from './screens/PositionScreen';
 import ProgressCircleScreen from './screens/ProgressCircleScreen';
+import RandomXScreen from './screens/RandomXScreen';
 
 export default function App() {
   const [selected, setSelected] = useState({
@@ -17,6 +18,7 @@ export default function App() {
     {name: 'size', screen: <SizeScreen />, id: 2},
     {name: 'position', screen: <PositionScreen />, id: 3},
     {name: 'progCircle', screen: <ProgressCircleScreen />, id: 4},
+    {name: 'jump', screen: <RandomXScreen />, id: 5},
   ];
 
   function itemToRender({item}) {
