@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
-import {View, StyleSheet, Animated, Button} from 'react-native';
-import {
+import {View, StyleSheet, Button} from 'react-native';
+import Animated, {
   useAnimatedProps,
   useDerivedValue,
   useSharedValue,
@@ -24,16 +24,12 @@ export function CircularProgress({
   const animateTo = useDerivedValue(() => 2 * Math.PI * invertedCompletion);
 
   const animatedProps = useAnimatedProps(() => {
-    console.log('thisRan', theta.value ); //@DEBUG
     return {
       strokeDashoffset: withTiming(theta.value * innerRadius, {
         duration: 1500,
       }),
     };
   });
-
-  console.log('animateTo.value', animateTo.value); //@DEBUG
-  console.log('theta.value', theta.value); //@DEBUG
 
   return (
     <View style={styles.container}>
@@ -47,7 +43,6 @@ export function CircularProgress({
           stroke={backgroundColor}
           strokeDasharray={`${circumfrence} ${circumfrence}`}
           strokeWidth={strokeWidth}
-        //   strokeDashoffset={2 * Math.PI * (innerRadius * 0.5)}
           strokeLinecap="round"
         />
       </Svg>
