@@ -13,13 +13,14 @@ import {
 export default function EasingScreen() {
   let positionAnim = new Animated.Value(0);
   const [isVertical, setIsVertical] = useState(true);
+  const [isReversed, setIsReversed] = useState(false);
 
   const animate = (easing, duration) => {
     positionAnim.setValue(0);
     Animated.timing(positionAnim, {
       toValue: isVertical ? 20 : 200,
       duration,
-      easing,
+      easing: isReversed ? Easing.out(easing) : Easing.in(easing),
       useNativeDriver: false,
     }).start();
   };
@@ -41,13 +42,27 @@ export default function EasingScreen() {
     setIsVertical(prevState => !prevState);
   }
 
+  function changeDirection() {
+    setIsReversed(prevState => !prevState);
+  }
+
   return (
     <View style={styles.container}>
-      <Button onPress={() => changeAxis()} title="Change axis"></Button>
-      <View style={{alignSelf: 'center'}}>
-        <Text style={{color: 'white'}}>
-          Current axis = {isVertical ? 'Y' : 'X'}
-        </Text>
+      <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+        <View style={{alignItems: 'center'}}>
+          <Button onPress={() => changeAxis()} title="Change axis"></Button>
+          <Text style={{color: 'white'}}>
+            Current axis = {isVertical ? 'Y' : 'X'}
+          </Text>
+        </View>
+        <View style={{alignItems: 'center'}}>
+          <Button
+            onPress={() => changeDirection()}
+            title="Change direction"></Button>
+          <Text style={{color: 'white'}}>
+            Current direction = {isReversed ? 'Easing.out' : 'Easing.in'}
+          </Text>
+        </View>
       </View>
       <View
         style={[
@@ -55,6 +70,7 @@ export default function EasingScreen() {
           {alignItems: isVertical ? 'center' : null},
         ]}>
         <Animated.View style={[styles.box, animatedStyles]} />
+        {isVertical && <View style={{width: 300, borderBottomWidth: 0.2, borderBottomColor: 'white', marginTop: 20}}></View>}
       </View>
       <SectionList
         style={styles.list}
@@ -72,8 +88,17 @@ export default function EasingScreen() {
             </View>
           </TouchableOpacity>
         )}
-        renderSectionHeader={({section: {title}}) => (
-          <Text style={styles.listHeader}>{title}</Text>
+        renderSectionHeader={({section: {title, subTitle}}) => (
+          <View style={{flexDirection: 'row'}}>
+            <Text style={styles.listHeader}>{title}</Text>
+            <Text
+              style={[
+                styles.listHeader,
+                {textTransform: 'lowercase', color: 'black'},
+              ]}>
+              {subTitle}
+            </Text>
+          </View>
         )}
       />
     </View>
@@ -83,12 +108,13 @@ export default function EasingScreen() {
 const SECTIONS = [
   {
     title: 'Predefined animations',
+    subTitle: '',
     data: [
       {
         title: 'Back ',
         subTitle: 'animates back slightly as the animation starts',
         easing: Easing.back(10),
-        duration: 500,
+        duration: 1500,
       },
       {
         title: 'Bounce',
@@ -111,6 +137,7 @@ const SECTIONS = [
   },
   {
     title: 'Standard functions',
+    subTitle: '',
     data: [
       {
         title: 'Linear',
@@ -131,6 +158,7 @@ const SECTIONS = [
   },
   {
     title: 'Additional functions',
+    subTitle: '',
     data: [
       {
         title: 'Bezier',
@@ -138,7 +166,12 @@ const SECTIONS = [
         easing: Easing.bezier(0, 5, 1, -1),
         duration: 2000,
       },
-      {title: 'Circle', subTitle: 'A circular function', easing: Easing.circle},
+      {
+        title: 'Circle',
+        subTitle: 'A circular function. Starts slow, ends fast',
+        easing: Easing.circle,
+        duration: 2000,
+      },
       {title: 'Sin', subTitle: 'A sinusoidal function', easing: Easing.sin},
       {title: 'Exp', subTitle: 'An exponential function', easing: Easing.exp},
     ],
@@ -147,20 +180,21 @@ const SECTIONS = [
     title: 'Combinations',
     data: [
       {
-        title: 'In + Bounce',
-        subTitle: '',
-        easing: Easing.in(Easing.bounce),
+        title: 'In + Circle',
+        subTitle: 'Starts slow ends fast.',
+        easing: Easing.in(Easing.circle),
         duration: 2000,
       },
       {
-        title: 'Out + Exp',
-        subTitle: '',
-        easing: Easing.out(Easing.exp),
+        title: 'Out + Circle',
+        subTitle: 'Reverse of In + Circle',
+        easing: Easing.out(Easing.circle),
+        duration: 2000,
       },
       {
-        title: 'InOut + Elastic',
-        subTitle: '',
-        easing: Easing.inOut(Easing.elastic(1)),
+        title: 'InOut + Circle',
+        subTitle: 'Does Circle + In and then reverses it',
+        easing: Easing.inOut(Easing.circle),
         duration: 2000,
       },
     ],
@@ -178,7 +212,9 @@ const styles = StyleSheet.create({
     color: '#61dafb',
   },
   boxContainer: {
-    height: 152,
+    height: 180,
+    borderBottomColor: 'white',
+    borderBottomWidth: 10
   },
   box: {
     marginTop: 32,
@@ -186,6 +222,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#61dafb',
     height: 100,
     width: 100,
+    borderRadius: 20
   },
   list: {
     backgroundColor: '#fff',
