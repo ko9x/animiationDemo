@@ -5,6 +5,7 @@ import FadeScreen from './screens/FadeScreen';
 import PositionScreen from './screens/PositionScreen';
 import ProgressCircleScreen from './screens/ProgressCircleScreen';
 import SpringScreen from './screens/SpringScreen';
+import RotateScreen from './screens/RotateScreen';
 
 export default function App() {
   const [selected, setSelected] = useState({
@@ -19,6 +20,7 @@ export default function App() {
     {name: 'position', screen: <PositionScreen />, id: 3},
     {name: 'progress', screen: <ProgressCircleScreen />, id: 4},
     {name: 'spring', screen: <SpringScreen />, id: 5},
+    {name: 'rotate', screen: <RotateScreen />, id: 6},
   ];
 
   function itemToRender({item}) {
