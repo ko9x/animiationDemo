@@ -23,7 +23,6 @@ export default function BallScreen() {
       pressed.value = true;
     },
     onActive: (event, ctx) => {
-        console.log('event', event)
       x.value = startingPosition + event.translationX;
       y.value = startingPosition + event.translationY;
     },
@@ -36,7 +35,6 @@ export default function BallScreen() {
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
-    //   backgroundColor: pressed.value ? '#FFC17A' : '#D9685B',
       transform: [{scale: withTiming(pressed.value ? 1.2 : 1)}, {translateX: x.value}, {translateY: y.value}],
     };
   });
