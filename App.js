@@ -6,7 +6,7 @@ import PositionScreen from './screens/PositionScreen';
 import ProgressCircleScreen from './screens/ProgressCircleScreen';
 import SpringScreen from './screens/SpringScreen';
 import RotateScreen from './screens/RotateScreen';
-import BallScreen from './screens/BallScreen';
+import PanScreen from './screens/PanScreen';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 export default function App() {
@@ -23,7 +23,7 @@ export default function App() {
     {name: 'progress', screen: <ProgressCircleScreen />, id: 4},
     {name: 'spring', screen: <SpringScreen />, id: 5},
     {name: 'rotate', screen: <RotateScreen />, id: 6},
-    {name: 'ball', screen: <BallScreen />, id: 7},
+    {name: 'pan', screen: <PanScreen />, id: 7},
   ];
 
   function itemToRender({item}) {

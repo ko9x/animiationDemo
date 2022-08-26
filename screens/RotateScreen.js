@@ -5,8 +5,10 @@ import Animated, {
   withRepeat,
   withTiming,
   withSequence,
+  Easing,
 } from 'react-native-reanimated';
 import {StyleSheet, Button, View} from 'react-native';
+import { Circle } from 'react-native-svg';
 
 export default function RotateScreen() {
   const rotation = useSharedValue(0);
@@ -36,7 +38,7 @@ export default function RotateScreen() {
         title="spin"
         onPress={() => {
           rotation.value = withSequence(
-            withTiming(360, {duration: 2000}),
+            withTiming(720, {duration: 5000, easing: Easing.inOut(Easing.circle)}),
             withTiming(0, {duration: 2000})
           )
         }}

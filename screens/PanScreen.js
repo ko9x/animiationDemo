@@ -3,29 +3,41 @@ import Animated, {
   useSharedValue,
   useAnimatedGestureHandler,
   useAnimatedStyle,
+  withSpring,
+  withTiming
 } from 'react-native-reanimated';
 import {
-  GestureHandlerRootView,
   TapGestureHandler,
+  PanGestureHandler,
 } from 'react-native-gesture-handler';
 import {StyleSheet, View, Text} from 'react-native';
 
 export default function BallScreen() {
   const pressed = useSharedValue(false);
+  const startingPosition = 0;
+  const x = useSharedValue(startingPosition);
+  const y = useSharedValue(startingPosition);
 
   const eventHandler = useAnimatedGestureHandler({
     onStart: (event, ctx) => {
       pressed.value = true;
     },
+    onActive: (event, ctx) => {
+        console.log('event', event)
+      x.value = startingPosition + event.translationX;
+      y.value = startingPosition + event.translationY;
+    },
     onEnd: (event, ctx) => {
       pressed.value = false;
+      x.value = withSpring(startingPosition);
+      y.value = withSpring(startingPosition);
     },
   });
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      backgroundColor: pressed.value ? '#FFC17A' : '#D9685B',
-      transform: [{scale: pressed.value ? 1.2 : 1}],
+    //   backgroundColor: pressed.value ? '#FFC17A' : '#D9685B',
+      transform: [{scale: withTiming(pressed.value ? 1.2 : 1)}, {translateX: x.value}, {translateY: y.value}],
     };
   });
 
@@ -37,16 +49,17 @@ export default function BallScreen() {
         width: '100%',
         alignItems: 'center',
       }}>
-      <TapGestureHandler onGestureEvent={eventHandler}>
+      <Text style={{marginTop: 10, fontSize: 20, color: '#585885'}}>Press and slide</Text>
+      <PanGestureHandler onGestureEvent={eventHandler}>
         <Animated.View style={[styles.ball, animatedStyle]} />
-      </TapGestureHandler>
+      </PanGestureHandler>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   ball: {
-    margin: 20,
+    marginTop: 50,
     height: 100,
     width: 100,
     borderRadius: 50,
@@ -58,8 +71,8 @@ const styles = StyleSheet.create({
     borderLeftWidth: 3,
     borderLeftColor: '#961E1E',
     shadowColor: 'black',
-    shadowOpacity: 1,
+    shadowOpacity: 0.9,
     shadowOffset: {width: 2, height: 20},
-    shadowRadius: 15,
+    shadowRadius: 10,
   },
 });
