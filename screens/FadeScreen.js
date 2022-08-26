@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Animated,
   Easing,
@@ -7,19 +7,26 @@ import {
   TouchableOpacity,
   Text,
   View,
+  Button,
 } from 'react-native';
 
 export default function EasingScreen() {
-  let fadeAnim = new Animated.Value(0);
+  const [fadeOut, setFadeOut] = useState(true);
+  let fadeAnim = new Animated.Value(fadeOut ? 1 : 0);
 
   const animate = (easing, duration) => {
-    fadeAnim.setValue(0);
+    fadeAnim.setValue(fadeOut ? 1 : 0);
     Animated.timing(fadeAnim, {
-      toValue: 1,
+      toValue: fadeOut ? 0 : 1,
+      delay: 500,
       duration: duration,
       easing,
       useNativeDriver: false,
-    }).start();
+    }).start(({finished}) => {
+      if (finished) {
+        // console.log('Fade animation finished')
+      }
+    });
   };
 
   const animatedStyles = [
@@ -31,9 +38,17 @@ export default function EasingScreen() {
     },
   ];
 
+  function toggleFade() {
+    setFadeOut(prevState => !prevState);
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Press rows below to preview the Easing!</Text>
+      <Text style={styles.title}>All animations have a half second delay</Text>
+      <Text style={styles.title}>{`Current fade setting: (${
+        fadeOut ? 'Fade out' : 'Fade in'
+      })`}</Text>
+      <Button onPress={() => toggleFade()} title="Toggle fade" />
       <View style={styles.boxContainer}>
         <Animated.View style={animatedStyles} />
       </View>
