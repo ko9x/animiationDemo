@@ -178,6 +178,7 @@ const SECTIONS = [
   },
   {
     title: 'Combinations',
+    subTitle: 'Change direction is bypassed on these',
     data: [
       {
         title: 'In + Circle',

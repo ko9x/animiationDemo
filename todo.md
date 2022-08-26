@@ -1,4 +1,7 @@
 ### Do Next
+* Finish reading the React Native Reanimated Docs
+    * Just finished Fundamentals/Animations
+        * Next is Fundamentals/Events
 * Finish the progCircle tutorial
 
 ### Done
