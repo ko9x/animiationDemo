@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     borderLeftColor: '#3170DE',
     shadowColor: "black",
     shadowOpacity: 1,
-    shadowOffset: { width: 5, height: 15 },
+    shadowOffset: { width: 2, height: 15 },
     shadowRadius: 15, 
   },
 });

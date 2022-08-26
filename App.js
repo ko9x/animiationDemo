@@ -6,6 +6,8 @@ import PositionScreen from './screens/PositionScreen';
 import ProgressCircleScreen from './screens/ProgressCircleScreen';
 import SpringScreen from './screens/SpringScreen';
 import RotateScreen from './screens/RotateScreen';
+import BallScreen from './screens/BallScreen';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 export default function App() {
   const [selected, setSelected] = useState({
@@ -21,6 +23,7 @@ export default function App() {
     {name: 'progress', screen: <ProgressCircleScreen />, id: 4},
     {name: 'spring', screen: <SpringScreen />, id: 5},
     {name: 'rotate', screen: <RotateScreen />, id: 6},
+    {name: 'ball', screen: <BallScreen />, id: 7},
   ];
 
   function itemToRender({item}) {
@@ -35,24 +38,26 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, alignItems: 'center'}}>
-      <StatusBar hidden={true} />
-      <View
-        style={{
-          alignItems: 'center',
-          width: '90%',
-          borderBottomColor: 'grey',
-          borderBottomWidth: 1,
-        }}>
-        <FlatList
-          contentContainerStyle={{alignItems: 'center'}}
-          horizontal
-          data={screens}
-          renderItem={itemToRender}
-          keyExtractor={item => item.id}
-        />
-      </View>
-      <View style={{flex: 10, width: '100%'}}>{selected.screen}</View>
-    </SafeAreaView>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <SafeAreaView style={{flex: 1, alignItems: 'center'}}>
+        <StatusBar hidden={true} />
+        <View
+          style={{
+            alignItems: 'center',
+            width: '90%',
+            borderBottomColor: 'grey',
+            borderBottomWidth: 1,
+          }}>
+          <FlatList
+            contentContainerStyle={{alignItems: 'center'}}
+            horizontal
+            data={screens}
+            renderItem={itemToRender}
+            keyExtractor={item => item.id}
+          />
+        </View>
+        <View style={{flex: 10, width: '100%'}}>{selected.screen}</View>
+      </SafeAreaView>
+    </GestureHandlerRootView>
   );
 }
