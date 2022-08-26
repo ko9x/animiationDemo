@@ -2,9 +2,13 @@ import React from 'react';
 import Animated, {
   useSharedValue,
   useAnimatedGestureHandler,
+  useAnimatedStyle,
 } from 'react-native-reanimated';
-import {TapGestureHandler} from 'react-native-gesture-handler';
-import {StyleSheet} from 'react-native';
+import {
+  GestureHandlerRootView,
+  TapGestureHandler,
+} from 'react-native-gesture-handler';
+import {StyleSheet, View, Text} from 'react-native';
 
 export default function BallScreen() {
   const pressed = useSharedValue(false);
@@ -18,25 +22,41 @@ export default function BallScreen() {
     },
   });
 
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: pressed.value ? '#FFC17A' : '#D9685B',
+      transform: [{scale: pressed.value ? 1.2 : 1}],
+    };
+  });
+
   return (
-    <TapGestureHandler onGestureEvent={eventHandler}>
-      <Animated.View style={[styles.ball]} />
-    </TapGestureHandler>
+    <View
+      style={{
+        backgroundColor: '#FCE6B8',
+        height: '100%',
+        width: '100%',
+        alignItems: 'center',
+      }}>
+      <TapGestureHandler onGestureEvent={eventHandler}>
+        <Animated.View style={[styles.ball, animatedStyle]} />
+      </TapGestureHandler>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   ball: {
+    margin: 20,
     height: 100,
     width: 100,
     borderRadius: 50,
-    backgroundColor: '#B94A4A',
+    backgroundColor: '#D9685B',
     borderRightWidth: 3,
-    borderRightColor: '#BD1A1A',
+    borderRightColor: '#961E1E',
     borderBottomWidth: 12,
-    borderBottomColor: '#BD1A1A',
+    borderBottomColor: '#961E1E',
     borderLeftWidth: 3,
-    borderLeftColor: '#BD1A1A',
+    borderLeftColor: '#961E1E',
     shadowColor: 'black',
     shadowOpacity: 1,
     shadowOffset: {width: 2, height: 20},
