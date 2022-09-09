@@ -1,6 +1,6 @@
 ### Do Next
-* Finish reading the React Native Reanimated Docs
-    * Watch the webinar at the end of Fundamentals/Events
+* Finish reading the Fundamentals section of the React Native Reanimated Docs
+    * Finish Custom Events
 * Finish the progCircle tutorial
 
 ### Done
